@@ -1,7 +1,9 @@
+import { EventBusBody } from "./../interfaces/index";
 import express from "express";
 import { randomBytes } from "crypto";
 import bodyParser from "body-parser";
 import cors from "cors";
+import axios from "axios";
 
 const app = express();
 
@@ -10,7 +12,7 @@ app.use(cors());
 
 const posts: { [key: string]: { id: string; title: string } } = {};
 
-app.get("/posts", (req, res) => {
+app.get("/posts", (_req, res) => {
   res.status(200).send(posts);
 });
 
@@ -19,6 +21,14 @@ app.post("/posts", (req, res) => {
   const { title } = req.body;
 
   posts[id] = { id, title };
+
+  axios.post("http://localhost:4242/events", {
+    type: "PostCreated",
+    data: {
+      id,
+      title,
+    },
+  } as EventBusBody);
 
   res.status(201).send(posts[id]);
 });
