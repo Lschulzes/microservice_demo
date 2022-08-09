@@ -1,7 +1,8 @@
-import { Comment, EventBusBody } from "../interfaces/index";
+import { EventBusBody, Comment } from "./../interfaces/index";
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
+import axios from "axios";
 
 const app = express();
 
@@ -22,8 +23,8 @@ app.get("/posts", (_req, res) => {
   res.status(200).send(posts);
 });
 
-app.post("/events", (req, res) => {
-  const { type, data }: EventBusBody = req.body;
+const handleEvent = (event: EventBusBody) => {
+  const { type, data }: EventBusBody = event;
 
   switch (type) {
     case "PostCreated":
@@ -33,7 +34,7 @@ app.post("/events", (req, res) => {
     case "CommentCreated":
       const { content, id, postId, status } = data;
       const index = posts.findIndex((post) => post.id === postId);
-      if (index < 0) return res.status(404);
+      if (index < 0) throw new Error("Not found!");
 
       posts[index] = {
         ...posts[index],
@@ -43,8 +44,23 @@ app.post("/events", (req, res) => {
       };
       break;
   }
+};
 
-  res.status(200).send("OK");
+app.post("/events", (req, res) => {
+  try {
+    const event: EventBusBody = req.body;
+
+    handleEvent(event);
+
+    res.status(200).send("OK");
+  } catch (error) {
+    res.status(400).send(error);
+  }
 });
 
-app.listen(4002, () => console.log("Listening on port 4002"));
+app.listen(4002, async () => {
+  console.log("Listening on port 4002");
+  const { data } = await axios.get("http://localhost:4242/events");
+
+  for (const event of data) handleEvent(event);
+});
