@@ -24,7 +24,6 @@ app.get("/posts", (_req, res) => {
 
 app.post("/events", (req, res) => {
   const { type, data }: EventBusBody = req.body;
-  console.log({ type });
 
   switch (type) {
     case "PostCreated":

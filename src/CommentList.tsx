@@ -1,12 +1,16 @@
 import { Comment } from "./PostList";
 
-type GetComments = Array<{ id: string; content: string }>;
-
 const CommentList = ({ comments }: { comments: Array<Comment> }) => {
   return (
     <ul>
-      {comments.map((comment) => (
-        <li key={comment.id}>{comment.content}</li>
+      {comments.map(({ id, content, status }) => (
+        <li key={id}>
+          {status === "approved"
+            ? content
+            : status === "pending"
+            ? "Comment awaiting moderation"
+            : "Comment rejected"}
+        </li>
       ))}
     </ul>
   );

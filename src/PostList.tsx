@@ -3,7 +3,11 @@ import React, { useEffect, useState } from "react";
 import CommentCreate from "./CommentCreate";
 import CommentList from "./CommentList";
 
-export type Comment = { id: string; content: string };
+export type Comment = {
+  id: string;
+  content: string;
+  status: "approved" | "pending" | "rejected";
+};
 
 type GetPosts = Array<{ id: string; title: string; comments: Array<Comment> }>;
 
@@ -32,7 +36,7 @@ const PostList = () => {
             <h1>{post.title}</h1>
           </div>
 
-          <CommentList comments={post.comments} postId={post.id} />
+          <CommentList comments={post.comments} />
           <CommentCreate postId={post.id} />
         </div>
       ))}
