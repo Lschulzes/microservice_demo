@@ -1,4 +1,4 @@
-import { EventBusBody, Comment } from "./../interfaces/index";
+import { EventBusBody, Comment } from "./interfaces/index";
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";

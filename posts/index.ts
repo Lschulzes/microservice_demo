@@ -1,4 +1,4 @@
-import { EventBusBody } from "./../interfaces/index";
+import { EventBusBody } from "./interfaces/index";
 import express from "express";
 import { randomBytes } from "crypto";
 import bodyParser from "body-parser";

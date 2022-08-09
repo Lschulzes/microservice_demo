@@ -1,4 +1,4 @@
-import { EventBusBody } from "./../interfaces/index";
+import { EventBusBody } from "./interfaces/index";
 import axios from "axios";
 import express from "express";
 import bodyParser from "body-parser";
