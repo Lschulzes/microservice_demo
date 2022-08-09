@@ -1,4 +1,4 @@
-import { EventBusBody } from "../interfaces/index";
+import { Comment, EventBusBody } from "../interfaces/index";
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
@@ -11,7 +11,7 @@ app.use(cors());
 const posts: Array<{
   id: string;
   title: string;
-  comments: Array<{ id: string; content: string }>;
+  comments: Array<Comment>;
 }> = [];
 
 app.get("/posts/:id/comments", (req, res) => {
@@ -30,13 +30,13 @@ app.post("/events", (req, res) => {
       posts.push({ ...event.data, comments: [] });
       break;
     case "CommentCreated":
-      const { content, id, postId } = event.data;
+      const { content, id, postId, status } = event.data;
       const index = posts.findIndex((post) => post.id === postId);
       if (index < 0) return res.status(404);
 
       posts[index] = {
         ...posts[index],
-        comments: posts[index].comments.concat([{ id, content }]),
+        comments: posts[index].comments.concat([{ id, content, status }]),
       };
       break;
   }

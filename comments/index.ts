@@ -1,4 +1,4 @@
-import { EventBusBody } from "./../interfaces/index";
+import { Comment, EventBusBody } from "./../interfaces/index";
 import express from "express";
 import { randomBytes } from "crypto";
 import bodyParser from "body-parser";
@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 const commentsByPostId: {
-  [postId: string]: Array<{ id: string; content: string }>;
+  [postId: string]: Array<Comment>;
 } = {};
 
 app.get("/posts/:id/comments", (req, res) => {
@@ -23,7 +23,7 @@ app.post("/posts/:id/comments", (req, res) => {
   const { content } = req.body;
 
   const comments = commentsByPostId[req.params.id] || [];
-  comments.push({ id, content });
+  comments.push({ id, content, status: "pending" });
 
   commentsByPostId[req.params.id] = comments;
 
@@ -33,6 +33,7 @@ app.post("/posts/:id/comments", (req, res) => {
       id,
       content,
       postId: req.params.id,
+      status: "pending",
     },
   } as EventBusBody);
 
