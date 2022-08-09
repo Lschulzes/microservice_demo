@@ -1,9 +1,7 @@
 import { EventBusBody } from "../interfaces/index";
 import express from "express";
-import { randomBytes } from "crypto";
 import bodyParser from "body-parser";
 import cors from "cors";
-import axios from "axios";
 
 const app = express();
 
@@ -20,7 +18,7 @@ app.get("/posts/:id/comments", (req, res) => {
   res.status(200).send(posts.find((post) => post.id === req.params.id));
 });
 
-app.get("/query/posts", (_req, res) => {
+app.get("/posts", (_req, res) => {
   res.status(200).send(posts);
 });
 

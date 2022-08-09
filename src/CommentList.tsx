@@ -1,17 +1,8 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import CommentCreate from "./CommentCreate";
 import { Comment } from "./PostList";
 
 type GetComments = Array<{ id: string; content: string }>;
 
-const CommentList = ({
-  postId,
-  comments,
-}: {
-  postId: string;
-  comments: Array<Comment>;
-}) => {
+const CommentList = ({ comments }: { comments: Array<Comment> }) => {
   return (
     <ul>
       {comments.map((comment) => (
