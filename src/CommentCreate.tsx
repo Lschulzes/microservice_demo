@@ -16,6 +16,7 @@ const CommentCreate = ({ postId }: Props) => {
     });
 
     setContent("");
+    window.location.reload();
   };
 
   return (

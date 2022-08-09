@@ -1,23 +1,17 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import CommentCreate from "./CommentCreate";
+import { Comment } from "./PostList";
 
 type GetComments = Array<{ id: string; content: string }>;
 
-const CommentList = ({ postId }: { postId: string }) => {
-  const [comments, setComments] = useState<GetComments>([]);
-
-  const getComments = async () => {
-    const { data } = await axios.get<GetComments>(
-      `http://localhost:4001/posts/${postId}/comments`
-    );
-    setComments(data);
-  };
-
-  useEffect(() => {
-    getComments();
-  }, []);
-
+const CommentList = ({
+  postId,
+  comments,
+}: {
+  postId: string;
+  comments: Array<Comment>;
+}) => {
   return (
     <ul>
       {comments.map((comment) => (

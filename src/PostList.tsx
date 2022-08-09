@@ -3,15 +3,17 @@ import React, { useEffect, useState } from "react";
 import CommentCreate from "./CommentCreate";
 import CommentList from "./CommentList";
 
-type GetPosts = {
-  [postId: string]: { id: string; title: string };
-};
+export type Comment = { id: string; content: string };
+
+type GetPosts = Array<{ id: string; title: string; comments: Array<Comment> }>;
 
 const PostList = () => {
-  const [posts, setPosts] = useState<GetPosts>({});
+  const [posts, setPosts] = useState<GetPosts>([]);
 
   const getPosts = async () => {
-    const { data } = await axios.get<GetPosts>("http://localhost:4000/posts");
+    const { data } = await axios.get<GetPosts>(
+      "http://localhost:4002/query/posts"
+    );
 
     setPosts(data);
   };
@@ -22,7 +24,7 @@ const PostList = () => {
 
   return (
     <div className="d-flex flex-row flex-wrap justify-content-between">
-      {Object.values(posts).map((post) => (
+      {posts.map((post) => (
         <div
           className="card p-2"
           style={{ width: "30%", marginBottom: "1.25rem", background: "#000" }}
@@ -32,7 +34,7 @@ const PostList = () => {
             <h1>{post.title}</h1>
           </div>
 
-          <CommentList postId={post.id} />
+          <CommentList comments={post.comments} postId={post.id} />
           <CommentCreate postId={post.id} />
         </div>
       ))}

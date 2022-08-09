@@ -33,4 +33,8 @@ app.post("/posts", (req, res) => {
   res.status(201).send(posts[id]);
 });
 
+app.post("/events", (req, res) => {
+  console.log(req.body.type);
+});
+
 app.listen(4000, () => console.log("Listening on port 4000"));
