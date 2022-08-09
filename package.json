@@ -5,6 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "posts": "NODE_OPTIONS='--no-warnings --loader ts-node/esm' nodemon --watch './posts/*' -e ts,tsx --exec ts-node ./posts/index.ts",
+    "comments": "NODE_OPTIONS='--no-warnings --loader ts-node/esm' nodemon --watch './comments/*' -e ts,tsx --exec ts-node ./comments/index.ts",
+    "query": "NODE_OPTIONS='--no-warnings --loader ts-node/esm' nodemon --watch './query/*' -e ts,tsx --exec ts-node ./query/index.ts",
+    "event-bus": "NODE_OPTIONS='--no-warnings --loader ts-node/esm' nodemon --watch './event-bus/*' -e ts,tsx --exec ts-node ./event-bus/index.ts",
+    "moderation": "NODE_OPTIONS='--no-warnings --loader ts-node/esm' nodemon --watch './moderation/*' -e ts,tsx --exec ts-node ./moderation/index.ts",
+    "all": "concurrently \"yarn posts \" \"yarn comments \" \"yarn query \" \"yarn event-bus \" \"yarn moderation \" \"yarn dev\"",
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
@@ -17,6 +23,7 @@
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
     "@vitejs/plugin-react": "^2.0.0",
+    "concurrently": "^7.3.0",
     "typescript": "^4.6.4",
     "vite": "^3.0.0"
   }
