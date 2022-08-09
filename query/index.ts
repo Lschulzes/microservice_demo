@@ -23,20 +23,24 @@ app.get("/posts", (_req, res) => {
 });
 
 app.post("/events", (req, res) => {
-  const event: EventBusBody = req.body;
+  const { type, data }: EventBusBody = req.body;
+  console.log({ type });
 
-  switch (event.type) {
+  switch (type) {
     case "PostCreated":
-      posts.push({ ...event.data, comments: [] });
+      posts.push({ ...data, comments: [] });
       break;
+    case "CommentUpdated":
     case "CommentCreated":
-      const { content, id, postId, status } = event.data;
+      const { content, id, postId, status } = data;
       const index = posts.findIndex((post) => post.id === postId);
       if (index < 0) return res.status(404);
 
       posts[index] = {
         ...posts[index],
-        comments: posts[index].comments.concat([{ id, content, status }]),
+        comments: posts[index].comments
+          .filter((comment) => comment.id !== id)
+          .concat([{ id, content, status }]),
       };
       break;
   }

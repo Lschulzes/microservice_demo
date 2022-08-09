@@ -7,7 +7,7 @@ const app = express();
 
 app.use(bodyParser.json());
 
-app.post("/events", (req, res) => {
+app.post("/events", (req, _res) => {
   const { type, data }: EventBusBody = req.body;
 
   if (type === "CommentCreated") {

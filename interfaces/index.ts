@@ -16,7 +16,7 @@ export type EventBusBody =
       };
     }
   | {
-      type: "CommentModerated";
+      type: "CommentModerated" | "CommentUpdated";
       data: {
         id: string;
         content: string;
