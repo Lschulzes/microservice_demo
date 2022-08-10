@@ -1,0 +1,50 @@
+apiVersion: skaffold/v2alpha3
+kind: Config
+deploy:
+  kubectl:
+    manifests:
+      - ./infra/k8s/*
+build:
+  local:
+    push: false
+  artifacts:
+    - image: lschulzes/posts
+      context: ./services/posts/
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "*.ts"
+            dest: .
+    - image: lschulzes/comments
+      context: ./services/comments/
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "*.ts"
+            dest: .
+    - image: lschulzes/query
+      context: ./services/query/
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "*.ts"
+            dest: .
+    - image: lschulzes/moderation
+      context: ./services/moderation/
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "*.ts"
+            dest: .
+    - image: lschulzes/event-bus
+      context: ./services/event-bus/
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "*.ts"
+            dest: .

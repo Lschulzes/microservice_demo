@@ -38,6 +38,6 @@ app.post("/events", (req, res) => {
 });
 
 app.listen(4000, () => {
-  console.log("Posts Service running!");
+  console.log("Posts Service running really fastly 🏃🏃🏃!");
   console.log("Listening on port 4000");
 });
