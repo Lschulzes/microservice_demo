@@ -15,11 +15,11 @@ const posts: Array<{
   comments: Array<Comment>;
 }> = [];
 
-app.get("/posts/:id/comments", (req, res) => {
+app.get("/query/posts/:id/comments", (req, res) => {
   res.status(200).send(posts.find((post) => post.id === req.params.id));
 });
 
-app.get("/posts", (_req, res) => {
+app.get("/query/posts", (_req, res) => {
   res.status(200).send(posts);
 });
 
