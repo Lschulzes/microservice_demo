@@ -9,6 +9,7 @@ app.use(bodyParser.json());
 
 app.post("/events", (req, _res) => {
   const { type, data }: EventBusBody = req.body;
+  console.log(type);
 
   if (type === "CommentCreated") {
     const status: CommentStatus = data.content.includes("orange")
@@ -16,7 +17,7 @@ app.post("/events", (req, _res) => {
       : "approved";
 
     axios
-      .post("http://localhost:4242/events", {
+      .post("http://event-bus-srv:4242/events", {
         type: "CommentModerated",
         data: { ...data, status },
       } as EventBusBody)

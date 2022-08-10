@@ -49,6 +49,7 @@ const handleEvent = (event: EventBusBody) => {
 app.post("/events", (req, res) => {
   try {
     const event: EventBusBody = req.body;
+    console.log(event.type);
 
     handleEvent(event);
 
@@ -60,7 +61,7 @@ app.post("/events", (req, res) => {
 
 app.listen(4002, async () => {
   console.log("Listening on port 4002");
-  const { data } = await axios.get("http://localhost:4242/events");
+  const { data } = await axios.get("http://event-bus-srv:4242/events");
 
   for (const event of data) handleEvent(event);
 });
