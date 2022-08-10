@@ -15,7 +15,7 @@ const PostList = () => {
   const [posts, setPosts] = useState<GetPosts>([]);
 
   const getPosts = async () => {
-    const { data } = await axios.get<GetPosts>("http://localhost:4002/posts");
+    const { data } = await axios.get<GetPosts>("http://posts.com:4002/posts");
 
     setPosts(data);
   };

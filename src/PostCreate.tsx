@@ -7,7 +7,7 @@ const PostCreate = () => {
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    await axios.post("http://localhost:4000/posts", { title });
+    await axios.post("http://posts.com:4000/posts", { title });
 
     setTitle("");
     window.location.reload();
